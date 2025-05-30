@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --fake-black: #010101;
+    --fake-white: #fefefe;
+    --monospace-builtin-font-pref: 'Consolas', 'Courier New', Courier, monospace;
+}
+
+body {
+    color: var(--fake-black);
+    background-color: var(--fake-white);
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+code, pre {
+    font-family: 'Roboto Mono', var(--monospace-builtin-font-pref);
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 42px;
+}
+
+h3 {
+    font-size: 38px;
+}
+
+h4 {
+    font-size: 32px;
+}
+
+h5 {
+    font-size: 28px;
+}
+
+h6 {
+    font-size: 22px;
+}
+
