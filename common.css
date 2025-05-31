@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --fake-black: #010101;
+    --fake-white: #fefefe;
+}
+
+body {
+    color: var(--fake-black);
+    background-color: var(--fake-white);
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+code, pre {
+    font-family: 'Roboto Mono', 'Consolas', 'Courier New', Courier, monospace;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 42px;
+}
+
+h3 {
+    font-size: 38px;
+}
+
+h4 {
+    font-size: 32px;
+}
+
+h5 {
+    font-size: 28px;
+}
+
+h6 {
+    font-size: 22px;
+}
+
+body > nav.navlink {
+    --border-thickness: 2px;
+    --divider-style: var(--border-thickness) solid gray;
+    z-index: 1000;
+    position: sticky;
+    top: calc(var(--border-thickness) * -1);
+    background-color: var(--fake-white);
+    padding: 8px;
+    margin: 4px 0;
+    border-top: var(--divider-style);
+    border-bottom: var(--divider-style);
+}
+
+body > nav.navlink > a {
+    font-size: 22px;
+    text-decoration: none;
+    margin: 0 4px;
+    padding: 6px;
+    color: blue;
+}
+
+body > nav.navlink > a:hover {
+    text-decoration: underline;
+    background-color: var(--fake-black);
+    color: cyan;
+}
+
+body > footer.copyright {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+body > footer.copyright > a.snslink {
+    font-size: 36px;
+    text-decoration: none;
+    margin: 8px;
+    color: var(--fake-black);
+}
+
+body > footer.copyright > a.snslink.bsky {
+    color: #1185fe;
+}
+
+body > footer.copyright > code {
+    font-size: 18px;
+    display: block;
+    margin: 8px;
+}
+
+div.banner {
+    width: 100%;
+    max-width: 768px;
+    text-align: center;
+    margin: auto;
+    padding: 12px;
+}
+
+div.banner.error {
+    background-color: red;
+    color: white;
+}
+
+div.banner.warn {
+    background-color: yellow;
+}

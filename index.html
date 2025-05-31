@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Logginwolf document</title>
+        <title>Logginwolf technical documentation</title>
         <meta name="keywords"
             content="werewolf, Miller's Hollow, archive, party, character, game, board, application, support">
         <meta name="description" content="Documentations website of Logginwolf's technical informations.">
@@ -13,32 +13,92 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css"
             integrity="sha512-58P9Hy7II0YeXLv+iFiLCv1rtLW47xmiRpC1oFafeKNShp8V5bKV/ciVtYqbk2YfxXQMt58DjNfkXFOn62xE+g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link type="text/css" rel="stylesheet" href="override.css">
-        <link type="text/css" rel="stylesheet" href="style.css">
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/fontawesome.min.js"
-            integrity="sha512-j12pXc2gXZL/JZw5Mhi6LC7lkiXL0e2h+9ZWpqhniz0DkDrO01VNlBrG3LkPBn6DgG2b8CDjzJT+lxfocsS1Vw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/brands.min.js"
-            integrity="sha512-ILOQokRQNF0S8SKV6fnaLNj02CmZnDWmYUr3zlH4jwToep0lWc7twuTzF+Mm0cKPdszi0xe8KymVi2y7mAweVQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="next" href="gamemode.html" />
+        <link type="text/css" rel="stylesheet" href="common.css">
+        <style>
+            p.techdoc-remark {
+                font-size: 18px;
+            }
+
+            div.sponsor-container {
+                text-align: center;
+            }
+        </style>
     </head>
 
     <body>
-        <h1>Logginwolf documentation website</h1>
+        <h1>Logginwolf technical documentation website</h1>
         <nav class="navlink">
-            <a href="/">Home</a>
-            <a href="#">Manual</a>
-            <a href="#">Data format</a>
+            <a href="index.html">Home</a>
+            <a href="gamemode.html">Game mode</a>
+            <a href="#">Roles</a>
+            <a href="#">Archive</a>
             <a href="#">Changelogs</a>
         </nav>
+        <div class="banner warn">
+            <p class="techdoc-remark">This website aims to provide open data standard from Logginwolf. Currently,
+                documentations for general usages of this application is unavailable.</p>
+        </div>
+        <article>
+            <section>
+                <p><b>Logginwolf</b> is an application for recording progress of <i>The Werewolves of Miller's
+                        Hollow</i> and it's variants. Currently, Logginwolf supports archiving these variants as below:
+                <ul>
+                    <li>Origin <ul>
+                            <li>Basic</li>
+                            <li>Expansion pack 1: <i>New Moon</i></li>
+                            <li>Expansion pack 2: <i>The Village</i></li>
+                        </ul>
+                    </li>
+                    <li>Chinese &lpar;狼人杀/狼人殺&rpar;</li>
+                </ul> Each variants has slightly difference regarding on rules, game flow and etc. that the completed
+                information can be found in <a href="gamemode.html">game mode</a> page.</p>
+            </section>
+            <section>
+                <p>The program is adapted <a href="https://flutter.dev/">Flutter</a> as frontend framework, which can be
+                    deployed to mobile &lpar;Android&rpar;<sup>1</sup> and desktop &lpar;Windows,
+                    Linux&rpar;<sup>1</sup> platforms at once. Although Logginwolf is not an open source program,
+                    dependencies derived from this project will keep open and release to <a
+                        href="https://pub.dev">pub.dev</a> as well as publishing source codes into <a
+                        href="https://github.com/Logginwolf">GitHub</a>. All repositories will be published under <a
+                        href="https://www.mozilla.org/en-US/MPL/2.0/"><abbr
+                            title="Mozilla Public License, Version 2.0">MPL 2.0</abbr></a> license.</p>
+                <p> Remarks:
+                <ol>
+                    <li>macOS and iOS release are not available but reserved for build.</li>
+                </ol>
+                </p>
+            </section>
+        </article>
+        <article>
+            <header>
+                <h3>Doubtful information concern</h3>
+            </header>
+            <p>Although origin Werewolf game manual can be found in <a
+                    href="https://cdn.1j1ju.com/medias/af/08/f4-the-werewolves-of-millers-hollow-rulebook.pdf">online</a>,
+                it's Chinese variants is still rely on <a
+                    href="https://zh.wikipedia.org/wiki/%E7%8B%BC%E4%BA%BA%E6%AE%BA">the corresponded article</a> from
+                Chinese Wikipedia. In additions, it remains uncertainty on making consensus rules due to rapid growth of
+                trends despite the roles are binarized already. Therefore, the adoption of Chinese variant must rely on
+                the Wikipedia pages until alternative sources available with credibility.</p>
+        </article>
+        <article>
+            <header>
+                <h3>Sponsors</h3>
+            </header>
+            <div class="sponsor-container"> Coming soon... </div>
+        </article>
         <footer class="copyright">
+            <a href="https://github.com/rk0cc" class="snslink gh">
+                <i class="fa-brands fa-github"></i>
+            </a>
             <a href="https://x.com/rk0cc_osp" class="snslink xtw">
                 <i class="fa-brands fa-x-twitter"></i>
             </a>
             <a href="https://bsky.app/profile/osp.rk0cc.xyz" class="snslink bsky">
                 <i class="fa-brands fa-bluesky"></i>
             </a>
-            <p>&copy;&nbsp;2025&nbsp;rk0cc</p>
+            <code>&copy;&nbsp;2025&nbsp;rk0cc</code>
         </footer>
     </body>
 
