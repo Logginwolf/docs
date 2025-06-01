@@ -66,6 +66,10 @@ body > nav.navlink > a:hover {
     color: cyan;
 }
 
+body > article {
+    margin: auto 5em;
+}
+
 body > footer.copyright {
     margin-top: 16px;
     margin-bottom: 8px;
@@ -104,4 +108,10 @@ div.banner.error {
 
 div.banner.warn {
     background-color: yellow;
+}
+
+@media screen and (max-width: 768px) {
+    body > article {
+        margin: auto 1.5em;
+    }
 }

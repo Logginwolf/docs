@@ -1,0 +1,5 @@
+round,dn,victum_id,victum_role,commiter_role,action
+1,n,1,villager,werewolf,cease
+1,n,1,villager,witch,revive
+1,d,3,cupid,general,cease
+1,d,2,werewolf,cupid,cease
