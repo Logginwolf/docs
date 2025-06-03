@@ -16,6 +16,18 @@
         <link rel="prev" href="roles.html" />
         <link rel="next" href="changelogs.html" />
         <link type="text/css" rel="stylesheet" href="common.css">
+        <style>
+            div.file-sample-field {
+                width: 100%;
+            }
+
+            div.file-sample-field > textarea {
+                display: block;
+                width: 100%;
+                resize: none;
+            }
+        </style>
+        <script src="https://logginwolf.github.io/js/ajax.min.js"></script>
     </head>
 
     <body>
@@ -27,7 +39,17 @@
             <a href="archive.html">Archive</a>
             <a href="changelogs.html">Changelogs</a>
         </nav>
-        <article></article>
+        <article>
+            <p><i>This page is under constructios</i></p>
+            <div class="file-sample-field">
+                <h6><a href="https://github.com/Logginwolf/docs/blob/main/examples/preferences.json">preferences.json</a></h6>
+                <textarea id="preferences-sample" disabled></textarea>
+            </div>
+            <div class="file-sample-field">
+                <h6><a href="https://github.com/Logginwolf/docs/blob/main/examples/rounds.csv?plain=1">rounds.csv</a></h6>
+                <textarea id="rounds-sample" disabled></textarea>
+            </div>
+        </article>
         <footer class="copyright">
             <a href="https://github.com/rk0cc" class="snslink gh">
                 <i class="fa-brands fa-github"></i>
@@ -40,6 +62,39 @@
             </a>
             <code>&copy;&nbsp;2025&nbsp;rk0cc</code>
         </footer>
+        <script>
+            (function () {
+                var ta = [
+                    document.querySelector("textarea#preferences-sample"),
+                    document.querySelector("textarea#rounds-sample")
+                ];
+
+                function adjustTAHeight(ta) {
+                    ta.style.height = "5px";
+                    ta.style.height = ta.scrollHeight + "px";
+                }
+
+                doAJAX({
+                    url: "https://logginwolf.github.io/docs/examples/preferences.json",
+                    method: "GET"
+                }, function (resp) {
+                    ta[0].appendChild(document.createTextNode(resp.body));
+                    adjustTAHeight(ta[0]);
+                });
+
+                doAJAX({
+                    url: "https://logginwolf.github.io/docs/examples/rounds.csv",
+                    method: "GET"
+                }, function (resp) {
+                    ta[1].appendChild(document.createTextNode(resp.body));
+                    adjustTAHeight(ta[1]);
+                });
+
+                window.addEventListener("resize", function (e) {
+                    ta.forEach(adjustTAHeight);
+                });
+            })();
+        </script>
     </body>
 
 </html>
