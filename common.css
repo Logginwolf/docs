@@ -9,9 +9,19 @@ body {
     color: var(--fake-black);
     background-color: var(--fake-white);
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    margin: 0 !important;
 }
 
-code, pre {
+body>h1:first-child {
+    margin-left: 12px;
+}
+
+body>div.ctx {
+    margin: 8px;
+}
+
+code,
+pre {
     font-family: 'Roboto Mono', 'Consolas', 'Courier New', Courier, monospace;
 }
 
@@ -39,7 +49,7 @@ h6 {
     font-size: 22px;
 }
 
-body > nav.navlink {
+body>nav.navlink {
     --border-thickness: 2px;
     --divider-style: var(--border-thickness) solid gray;
     z-index: 1000;
@@ -52,7 +62,7 @@ body > nav.navlink {
     border-bottom: var(--divider-style);
 }
 
-body > nav.navlink > a {
+body>nav.navlink>a {
     font-size: 22px;
     text-decoration: none;
     margin: 0 4px;
@@ -60,34 +70,34 @@ body > nav.navlink > a {
     color: blue;
 }
 
-body > nav.navlink > a:hover {
+body>nav.navlink>a:hover {
     text-decoration: underline;
     background-color: var(--fake-black);
     color: cyan;
 }
 
-body > article {
+body>div.ctx>article {
     margin: auto 5em;
 }
 
-body > footer.copyright {
+body>div.ctx>footer.copyright {
     margin-top: 16px;
     margin-bottom: 8px;
     text-align: center;
 }
 
-body > footer.copyright > a.snslink {
+body>div.ctx>footer.copyright>a.snslink {
     font-size: 36px;
     text-decoration: none;
     margin: 8px;
     color: var(--fake-black);
 }
 
-body > footer.copyright > a.snslink.bsky {
+body>div.ctx>footer.copyright>a.snslink.bsky {
     color: #1185fe;
 }
 
-body > footer.copyright > code {
+body>div.ctx>footer.copyright>code {
     font-size: 18px;
     display: block;
     margin: 8px;
@@ -101,12 +111,14 @@ div.banner {
     padding: 12px;
 }
 
-div.banner.error {
-    background-color: red;
+div.banner.error,
+table tr>td.highlight.error {
+    background-color: crimson;
     color: var(--fake-white);
 }
 
-div.banner.warn {
+div.banner.warn,
+table tr>td.highlight.warn {
     background-color: yellow;
 }
 
@@ -114,12 +126,28 @@ div.banner.info {
     background-color: cyan;
 }
 
-div.banner.pass {
-    background-color: limegreen;
+div.banner.success,
+table tr>td.highlight.success {
+    background-color: lime;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table.dynamic-layout {
+    table-layout: auto;
+}
+
+table tr>td,
+table tr>th {
+    text-align: center;
+    padding: 6px;
 }
 
 @media screen and (max-width: 768px) {
-    body > article {
+    body>article {
         margin: auto 1.5em;
     }
 }
