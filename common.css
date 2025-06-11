@@ -110,6 +110,14 @@ div.banner.warn {
     background-color: yellow;
 }
 
+div.banner.info {
+    background-color: cyan;
+}
+
+div.banner.pass {
+    background-color: limegreen;
+}
+
 @media screen and (max-width: 768px) {
     body > article {
         margin: auto 1.5em;

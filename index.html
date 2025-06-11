@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css"
             integrity="sha512-58P9Hy7II0YeXLv+iFiLCv1rtLW47xmiRpC1oFafeKNShp8V5bKV/ciVtYqbk2YfxXQMt58DjNfkXFOn62xE+g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="next" href="gamemode.html" />
+        <link rel="next" href="roles.html" />
         <link type="text/css" rel="stylesheet" href="common.css">
         <style>
             p.techdoc-remark {
@@ -23,6 +23,25 @@
             div.sponsor-container {
                 text-align: center;
             }
+
+            table.rule-table {
+                width: 100%;
+                table-layout: fixed;
+            }
+
+            table.rule-table tr>td,
+            table.rule-table tr>th {
+                text-align: center;
+                padding: 6px;
+            }
+
+            table.rule-table tr>td.success {
+                background-color: lime;
+            }
+
+            table.rule-table tr>td.error {
+                background-color: crimson;
+            }
         </style>
     </head>
 
@@ -30,7 +49,6 @@
         <h1>Logginwolf technical documentation website</h1>
         <nav class="navlink">
             <a href="./">Home</a>
-            <a href="gamemode.html">Game mode</a>
             <a href="roles.html">Roles</a>
             <a href="archive.html">Archive</a>
             <a href="changelogs.html">Changelogs</a>
@@ -51,10 +69,8 @@
                         </ul>
                     </li>
                     <li>Chinese &lpar;狼人杀/狼人殺&rpar;</li>
-                </ul> Each variants has slightly difference regarding on rules, game flow and etc. that the completed
-                information can be found in <a href="gamemode.html">game mode</a> page.</p>
-            </section>
-            <section>
+                </ul>
+                </p>
                 <p>The program is adapted <a href="https://flutter.dev/">Flutter</a> as frontend framework, which can be
                     deployed to mobile &lpar;Android&rpar;<sup>1</sup> and desktop &lpar;Windows,
                     Linux&rpar;<sup>1</sup> platforms at once. Although Logginwolf is not an open source program,
@@ -63,25 +79,107 @@
                         href="https://github.com/Logginwolf">GitHub</a>. All repositories will be published under <a
                         href="https://www.mozilla.org/en-US/MPL/2.0/"><abbr
                             title="Mozilla Public License, Version 2.0">MPL 2.0</abbr></a> license.</p>
-                <p> Remarks:
+            </section>
+            <section>
+                <header>
+                    <h3>Background</h3>
+                </header>
+                <p><i>The Werewolves of Miller's Hollow</i> has been released at early 2000s as a theme of <i>Mafia</i>
+                    and it becomes peak during pandamic between March and May 2020 according to Google
+                    Trends<sup>2</sup>. It is because the game can be played without properties as well as increase
+                    usages of online conferencing software that it assists peoples to retains social interactions when
+                    going outside was forbidden. Depending on regions scope, it also reveals that East Asia has the most
+                    interests rates amongs with other geocultural<sup>2</sup>. Therefore, the derived version of
+                    <i>Werewolf</i> were invented to minimize complexity of player roles and eliminate third teams that
+                    these improvment can make the game progress becomes compact to attract peoples who have limited
+                    vacant times.</p>
+            </section>
+            <section>
+                <header>
+                    <h3>Rules</h3>
+                </header>
+                <p>Logginwolf adapts partial rules from the official <a
+                        href="https://cdn.1j1ju.com/medias/af/08/f4-the-werewolves-of-millers-hollow-rulebook.pdf"><i>The
+                            Werewolves of Miller's Hollow</i> manual</a>:</p>
+                <ul>
+                    <li>
+                        <p><b>Players &lpar;Including moderator&rpar;:</b> 6 - 48 peoples</p>
+                    </li>
+                    <li>
+                        <p><b>Parties:</b> Townfolk, Werewolf and third-party<sup>3</sup></p>
+                    </li>
+                    <li>
+                        <p><b>Win condition:</b>
+                        <ul>
+                            <li><b>Werewolf:</b> Elimilate all members in Townfolk party and prevent being identified
+                                during discussion section</li>
+                            <li><b>Townfolk:</b> Find all suspects of Werewolf before being eliminated</li>
+                            <li>Third-party roles has unique winning condition, please refer to <a
+                                    href="roles.html">role page</a> for more details</li>
+                        </ul>
+                        </p>
+                    </li>
+                    <li>
+                        <p><b>Supported players in Werewolf party<sup>4</sup>:</b></p>
+                        <table class="rule-table" border="1">
+                            <tr>
+                                <th>Range of participants</th>
+                                <th>Minimum</th>
+                                <th>Maximum</th>
+                            </tr>
+                            <tr>
+                                <td>6 - 7</td>
+                                <td rowspan="2">2</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>8 - 11</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>12 - 23</td>
+                                <td>4</td>
+                                <td rowspan="2">&lpar;1&sol;3 of participants, floored if cannot divided to
+                                    integer&rpar;</td>
+                            </tr>
+                            <tr>
+                                <td>24 - 47</td>
+                                <td>6</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <header>
+                    <h3>Guidance when using Logginwolf</h3>
+                </header>
+                <ul>
+                    <li>
+                        <p>Logginwolf is an assist program for moderator, no participants are allowed to peek and
+                            control the program during in the game progress, no matter the participants is active or not.</p>
+                    </li>
+                    <li>
+                        <p>The game progress are saved into device storage automatically at the end of initial, night
+                            and day turn. If proceeding undo after at the end of game turn, all previous turn records
+                            are discared. Therefore, please verify applying record before proceeding next turn.</p>
+                    </li>
+                    <li>
+                        <p>Archive can only be generated when entire game progress is completed and afterward.</p>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h6>Remarks</h6>
                 <ol>
                     <li>macOS and iOS release are not available but reserved for build.</li>
+                    <li><a
+                            href="https://trends.google.com/trends/explore?date=2020-01-01%202020-12-31&q=%2Fg%2F121k35b6&hl=en-GB">Statistic</a>
+                        was captured in 1 June, 2025.</li>
+                    <li>Third-party may not be availabled in some variants.</li>
+                    <li>Ensure the number of Werewolf cards meet the requirement when thief is included.</li>
                 </ol>
-                </p>
             </section>
-        </article>
-        <hr />
-        <article>
-            <header>
-                <h3>Doubtful information concern</h3>
-            </header>
-            <p>Although origin Werewolf game manual can be found in <a
-                    href="https://cdn.1j1ju.com/medias/af/08/f4-the-werewolves-of-millers-hollow-rulebook.pdf">online</a>,
-                it's Chinese variants is still rely on <a
-                    href="https://zh.wikipedia.org/wiki/%E7%8B%BC%E4%BA%BA%E6%AE%BA">the corresponded article</a> from
-                Chinese Wikipedia. In additions, it remains uncertainty on making consensus rules due to rapid growth of
-                trends despite the roles are binarized already. Therefore, the adoption of Chinese variant must rely on
-                the Wikipedia pages until alternative sources available with credibility.</p>
         </article>
         <article>
             <header>
