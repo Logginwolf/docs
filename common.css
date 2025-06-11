@@ -103,7 +103,7 @@ div.banner {
 
 div.banner.error {
     background-color: red;
-    color: white;
+    color: var(--fake-white);
 }
 
 div.banner.warn {
