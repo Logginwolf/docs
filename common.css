@@ -49,6 +49,19 @@ h6 {
     font-size: 22px;
 }
 
+nav.fragment-link ul {
+    list-style: none;
+}
+
+nav.fragment-link h1,
+nav.fragment-link h2,
+nav.fragment-link h3,
+nav.fragment-link h4,
+nav.fragment-link h5,
+nav.fragment-link h6 {
+    margin: 16px 0 !important;
+}
+
 body>nav.navlink {
     --border-thickness: 2px;
     --divider-style: var(--border-thickness) solid gray;
@@ -146,8 +159,12 @@ table tr>th {
     padding: 6px;
 }
 
+table tr>td {
+    word-wrap: break-word;
+}
+
 @media screen and (max-width: 768px) {
-    body>article {
+    body>div.ctx>article {
         margin: auto 1.5em;
     }
 }
