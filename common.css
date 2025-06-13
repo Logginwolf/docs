@@ -163,6 +163,11 @@ table tr>td {
     word-wrap: break-word;
 }
 
+table tr>td ul,
+table tr>td ol {
+    text-align: left;
+}
+
 @media screen and (max-width: 768px) {
     body>div.ctx>article {
         margin: auto 1.5em;
