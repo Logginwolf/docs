@@ -13,21 +13,15 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css"
             integrity="sha512-58P9Hy7II0YeXLv+iFiLCv1rtLW47xmiRpC1oFafeKNShp8V5bKV/ciVtYqbk2YfxXQMt58DjNfkXFOn62xE+g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+            integrity="sha512-hasIneQUHlh06VNBe7f6ZcHmeRTLIaQWFd43YriJ0UND19bvYRauxthDg8E4eVNPm9bRUhr5JGeqH7FRFXQu5g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="prev" href="roles.html" />
         <link rel="next" href="changelogs.html" />
         <link type="text/css" rel="stylesheet" href="common.css">
-        <style>
-            div.file-sample-field {
-                width: 100%;
-            }
-
-            div.file-sample-field>textarea {
-                display: block;
-                width: 100%;
-                resize: none;
-            }
-        </style>
-        <script src="https://logginwolf.github.io/js/ajax.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+            integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
 
     <body>
@@ -46,19 +40,171 @@
                 </div>
             </noscript>
             <article>
-                <p><i>This page is under constructios</i></p>
-                <div class="file-sample-field">
-                    <h6><a
-                            href="https://github.com/Logginwolf/docs/blob/main/examples/preferences.json">preferences.json</a>
-                    </h6>
-                    <textarea id="preferences-sample" disabled></textarea>
-                </div>
-                <div class="file-sample-field">
-                    <h6><a
-                            href="https://github.com/Logginwolf/docs/blob/main/examples/rounds.csv?plain=1">rounds.csv</a>
-                    </h6>
-                    <textarea id="rounds-sample" disabled></textarea>
-                </div>
+                <section>
+                    <p> Logginwolf allows user to export previous gameplay record for statistic analysis. The archive is
+                        encoded with UTF-8 that it constructed with three ordered partitions:
+                    <ul>
+                        <li><a href="#iof">Identifier, offsets and flags</a></li>
+                        <li><a href="#checksum">Checksums</a></li>
+                        <li>Three <a href="#recdata">recorded data</a> sections (compressed):<ul>
+                                <li><a href="#recdata-pref">Preferences</a></li>
+                                <li><a href="#recdata-entstat">Entities and Status</a></li>
+                                <li><a href="#recdata-grlog">Game rounds log</a></li>
+                            </ul>
+                        </li>
+                    </ul> It <b>only</b> can be exported once the game progress is completed. Moreover, the archive
+                    should not be modified afterward.</p>
+                </section>
+                <section id="iof">
+                    <header>
+                        <h3>Identifier, offsets and flags</h3>
+                    </header>
+                    <p>The first partition are divided in total six sectors, each sections occupie eight bytes without
+                        delimiter. The first sector is an identifier bytecode, which should be Gray code of ASCII
+                        encoded "LogWolfs" (<code>4C 6F 67 57 6F 6C 66 73</code> in hex code). From second to fourth
+                        sectors are current sections offset, which start from previous sections when uncompressed. Fifth
+                        sector is used for compression configuration flag as well as custom sector for the sixth (final)
+                        sector. Hence, this table displays expected result of hex dumping the archive file (without
+                        deployment in custom sector): </p>
+                    <table border="1">
+                        <tr>
+                            <th>Address</th>
+                            <th>0</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th>8</th>
+                            <th>9</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>E</th>
+                            <th>F</th>
+                        </tr>
+                        <tr>
+                            <th>0x</th>
+                            <td>6A</td>
+                            <td>58</td>
+                            <td>D4</td>
+                            <td>FC</td>
+                            <td>D8</td>
+                            <td>DA</td>
+                            <td>55</td>
+                            <td>4A</td>
+                            <td colspan="8">(Offset of preferences in recorded data section)</td>
+                        </tr>
+                        <tr>
+                            <th>1x</th>
+                            <td colspan="8">(Offset of entity and status in recorded data section)</td>
+                            <td colspan="8">(Offset of game rounds log in recorded data section)</td>
+                        </tr>
+                        <tr>
+                            <th>2x</th>
+                            <td colspan="8">(Flag configuration for compression)</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>00</td>
+                        </tr>
+                    </table>
+                </section>
+                <hr />
+                <section id="checksum">
+                    <header>
+                        <h3>Checksum</h3>
+                    </header>
+                    <p>The next section contains checksums of recorded data, which uses <a
+                            href="https://en.wikipedia.org/wiki/SHA-3">SHA3-512</a> to calculate hash value. Each
+                        checksum contains 64 bytes for each hashing result of the recorded data. Therefore, it occupies
+                        192 bytes in total.</p>
+                    <p>The result of hex dump should be look like as below:</p>
+                    <table border="1">
+                        <tr>
+                            <th>Address</th>
+                            <th>0</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th>8</th>
+                            <th>9</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>E</th>
+                            <th>F</th>
+                        </tr>
+                        <tr>
+                            <th>3x</th>
+                            <td colspan="16" rowspan="4">(SHA3-512's hash result of preferences in recorded data
+                                sections)</td>
+                        </tr>
+                        <tr>
+                            <th>4x</th>
+                        </tr>
+                        <tr>
+                            <th>5x</th>
+                        </tr>
+                        <tr>
+                            <th>6x</th>
+                        </tr>
+                        <tr>
+                            <th>7x</th>
+                            <td colspan="16" rowspan="4">(SHA3-512's hash result of entity and status in recorded data
+                                sections)</td>
+                        </tr>
+                        <tr>
+                            <th>8x</th>
+                        </tr>
+                        <tr>
+                            <th>9x</th>
+                        </tr>
+                        <tr>
+                            <th>Ax</th>
+                        </tr>
+                        <tr>
+                            <th>Bx</th>
+                            <td colspan="16" rowspan="4">(SHA3-512's hash result of game rounds log in recorded data
+                                sections)</td>
+                        </tr>
+                        <tr>
+                            <th>Cx</th>
+                        </tr>
+                        <tr>
+                            <th>Dx</th>
+                        </tr>
+                        <tr>
+                            <th>Ex</th>
+                        </tr>
+                    </table>
+                </section>
+                <hr />
+                <section id="recdata-pref">
+                    <header>
+                        <h3>Recorded data</h3>
+                    </header>
+                    <p>
+                    </p>
+                    <div id="recdata-pref">
+                        <h5>Preferences</h5>
+                        <p><a href="https://github.com/Logginwolf/schemas/blob/1/preferences.json">source code of JSON
+                                schema</a></p>
+                        <pre><code class="language-json">{"edition": 1, "name": "foo", "createdAt": "2025-06-01T14:00:00+00:00"}</code></pre>
+                    </div>
+                </section>
             </article>
             <footer class="copyright">
                 <a href="https://github.com/rk0cc" class="snslink gh">
@@ -74,36 +220,12 @@
             </footer>
         </div>
         <script>
+            function copySchemaURL() {
+
+            }
+
             (function () {
-                var ta = [
-                    document.querySelector("textarea#preferences-sample"),
-                    document.querySelector("textarea#rounds-sample")
-                ];
-
-                function adjustTAHeight(ta) {
-                    ta.style.height = "5px";
-                    ta.style.height = ta.scrollHeight + "px";
-                }
-
-                doAJAX({
-                    url: "https://logginwolf.github.io/docs/examples/preferences.json",
-                    method: "GET"
-                }, function (resp) {
-                    ta[0].appendChild(document.createTextNode(resp.body));
-                    adjustTAHeight(ta[0]);
-                });
-
-                doAJAX({
-                    url: "https://logginwolf.github.io/docs/examples/rounds.csv",
-                    method: "GET"
-                }, function (resp) {
-                    ta[1].appendChild(document.createTextNode(resp.body));
-                    adjustTAHeight(ta[1]);
-                });
-
-                window.addEventListener("resize", function (e) {
-                    ta.forEach(adjustTAHeight);
-                });
+                hljs.highlightAll();
             })();
         </script>
     </body>
