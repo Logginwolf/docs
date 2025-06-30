@@ -90,7 +90,7 @@ body>nav.navlink>a:hover {
 }
 
 body>div.ctx>article {
-    margin: auto 5em;
+    margin: auto 8em;
 }
 
 body>div.ctx>footer.copyright {
@@ -168,8 +168,14 @@ table tr>td ol {
     text-align: left;
 }
 
+@media screen and (max-width: 1200px) {
+    body>div.ctx>article {
+        margin: auto 5em;
+    }
+}
+
 @media screen and (max-width: 768px) {
     body>div.ctx>article {
-        margin: auto 1.5em;
+        margin: auto 2em;
     }
 }
