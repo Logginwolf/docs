@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-logginwolf-archive-edition="1">
 
     <head>
         <meta charset="UTF-8">
@@ -22,6 +22,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
             integrity="sha512-EBLzUL8XLl+va/zAsmXwS7Z2B1F9HUHkZwyS/VKwh3S7T/U0nF4BaU29EP/ZSf6zgiIxYAnKLu6bJ8dqpmX5uw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            table:not(.dynamic-layout).hex-table tr>th.addr-grid:first-child:not([colspan]) {
+                width: 64px;
+            }
+        </style>
     </head>
 
     <body>
@@ -41,12 +46,13 @@
             </noscript>
             <article>
                 <section>
-                    <p> Logginwolf allows user to export previous gameplay record for statistic analysis. The archive is
-                        encoded with UTF-8 that it constructed with three ordered partitions:
+                    <p> Logginwolf allows user to export previous gameplay record for statistic analysis. The archive
+                        uses <code>.wlog</code> (or <code>.wlo</code> if there is strict limit of file extension length)
+                        as file extension that it constructed with three ordered partitions:
                     <ul>
                         <li><a href="#iof">Identifier, offsets and flags</a></li>
                         <li><a href="#checksum">Checksums</a></li>
-                        <li>Three <a href="#recdata">recorded data</a> sections (compressed):<ul>
+                        <li>Three <a href="#recdata">recorded data</a> sections (compressed, UTF-8 encoded):<ul>
                                 <li><a href="#recdata-pref">Preferences</a></li>
                                 <li><a href="#recdata-entstat">Entities and Status</a></li>
                                 <li><a href="#recdata-grlog">Game rounds log</a></li>
@@ -63,12 +69,12 @@
                         delimiter. The first sector is an identifier bytecode, which should be Gray code of ASCII
                         encoded "LogWolfs" (<code>4C 6F 67 57 6F 6C 66 73</code> in hex code). From second to fourth
                         sectors are current sections offset, which start from previous sections when uncompressed. Fifth
-                        sector is used for compression configuration flag as well as custom sector for the sixth (final)
-                        sector. Hence, this table displays expected result of hex dumping the archive file (without
-                        deployment in custom sector): </p>
-                    <table border="1">
+                        sector is used for configuration flag as well as custom sector for the sixth (final) sector.
+                        Hence, this table displays expected result of hex dumping the archive file (without deployment
+                        in custom sector): </p>
+                    <table border="1" class="hex-table iof">
                         <tr>
-                            <th>Address</th>
+                            <th class="addr-grid">Address</th>
                             <th>0</th>
                             <th>1</th>
                             <th>2</th>
@@ -105,7 +111,7 @@
                         </tr>
                         <tr>
                             <th>2x</th>
-                            <td colspan="8">(Flag configuration for compression)</td>
+                            <td colspan="8">(Flag configuration, see <a href="#iof-flagconf">below</a>)</td>
                             <td>00</td>
                             <td>00</td>
                             <td>00</td>
@@ -116,8 +122,62 @@
                             <td>00</td>
                         </tr>
                     </table>
-                    <h5>Compression flag</h5>
-                    <p></p>
+                    <div id="iof-flagconf">
+                        <h5>Flags configuration</h5>
+                        <p>As mentioned before, the fifth sector is used for flag configuration, which offers metadata
+                            and data format options. Each addresses value in this sector can be denoted in either 8-bit
+                            or two 4-bit pattern that the usage of the addresses are mapped into the table as below:
+                        </p>
+                        <table border="1" class="hex-table dynamic-layout flagconf">
+                            <tr>
+                                <th colspan="2" class="addr-grid">Address</th>
+                                <th>0</th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                                <th>5</th>
+                                <th>6</th>
+                                <th>7</th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2">2x</th>
+                                <th>Upper</th>
+                                <td rowspan="2">OS identifier</td>
+                                <td>EOL sequence</td>
+                                <td>Compress method</td>
+                                <td rowspan="2" colspan="5">(Reserved)</td>
+                            </tr>
+                            <tr>
+                                <th>Lower</th>
+                                <td>CSV delimiter</td>
+                                <td>Compress level</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <h6>OS identifier</h6>
+                            <p>This flag occupies entire address at <code>0x20</code> that it represents which operating
+                                system is used for generating archive file. The eligable values and their corresponding
+                                operating system are shown as below:
+                            <ul>
+                                <li><code>0x00</code>: Any proprietary systems which cannot classified in this list
+                                    (e.g. HarmonyOS, Classic Mac OS)</li>
+                                <li><code>0x01</code>: Windows NT</li>
+                                <li><code>0x02</code>: Legacy Windows system (9x, CE, Mobile)</li>
+                                <li><code>0x04</code>: macOS</li>
+                                <li><code>0x08</code>: iOS, iPadOS, visionOS, wearOS, tvOS</li>
+                                <li><code>0x10</code>: Linux based operating system (without modification in kernel)</li>
+                                <li><code>0x20</code>: Android</li>
+                                <li><code>0x40</code>: Modified Linux kernel (except Android)</li>
+                                <li><code>0x80</code>: Other system runs in UNIX kernel (except Darwin based, which is
+                                    core of macOS and iOS)</li>
+                            </ul>
+                            </p>
+                        </div>
+                        <p>Value in addresses which marked as "reserved" must be set as <b><code>00</code></b>.
+                            Otherwise, it consider as <b>invalid</b> archive file that reading process must be aborted.
+                        </p>
+                    </div>
                 </section>
                 <hr />
                 <section id="checksum">
@@ -129,9 +189,9 @@
                         checksum contains 64 bytes for each hashing result of the recorded data. Therefore, it occupies
                         192 bytes in total.</p>
                     <p>The result of hex dump should be look like as below:</p>
-                    <table border="1">
+                    <table border="1" class="hex-table checksum">
                         <tr>
-                            <th>Address</th>
+                            <th class="addr-grid">Address</th>
                             <th>0</th>
                             <th>1</th>
                             <th>2</th>
@@ -202,8 +262,7 @@
                     </p>
                     <div id="recdata-pref">
                         <h5>Preferences</h5>
-                        <p><a href="https://github.com/Logginwolf/schemas/blob/1/preferences.json">source code of JSON
-                                schema</a></p>
+                        <p><a data-jsonschema-gh-src>source code of JSON schema</a></p>
                         <pre><code class="language-json">{"edition": 1, "name": "foo", "createdAt": "2025-06-01T14:00:00+00:00"}</code></pre>
                     </div>
                 </section>
@@ -221,15 +280,7 @@
                 <code>&copy;&nbsp;2025&nbsp;rk0cc</code>
             </footer>
         </div>
-        <script>
-            function copySchemaURL() {
-
-            }
-
-            (function () {
-                hljs.highlightAll();
-            })();
-        </script>
+        <script src="archivepage.js"></script>
     </body>
 
 </html>
