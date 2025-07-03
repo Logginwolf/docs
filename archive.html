@@ -227,8 +227,17 @@
                             <p>Some compression algorithms provide level to adjust quality of the result as well as
                                 velocity of processing. It located in lower 4-bit at address <code>0x22</code> with the
                                 range of value from <code>0x0</code> (fastest but the worst quality) to <code>0xF</code>
-                                (slowest but best quality). This value is ignored if compression level is unsupported by
-                                SDK.</p>
+                                (slowest but best quality). This value is ignored if variable compression level is
+                                unsupported by SDK, which marked as <code>0</code> bit 3 at the same address' upper
+                                4-bit.</p>
+                            <p>Here are few examples of represented value in address <code>0x22</code>:
+                            <ul>
+                                <li><code>0xA6</code> means the archive uses Brotli to compress data with compress level
+                                    at 6.</li>
+                                <li><code>0x35</code> means the archive uses LZMA with no compression level supported
+                                    (eventhough the value assigned as 5).</li>
+                            </ul>
+                            </p>
                         </div>
                     </div>
                 </section>
