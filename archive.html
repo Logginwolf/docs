@@ -68,10 +68,10 @@
                     <p>The first partition are divided in total six sectors, each sections occupie eight bytes without
                         delimiter. The first sector is an identifier bytecode, which should be Gray code of ASCII
                         encoded "LogWolfs" (<code>4C 6F 67 57 6F 6C 66 73</code> in hex code). From second to fourth
-                        sectors are current sections offset, which start from previous sections when uncompressed. Fifth
-                        sector is used for configuration flag as well as custom sector for the sixth (final) sector.
-                        Hence, this table displays expected result of hex dumping the archive file (without deployment
-                        in custom sector): </p>
+                        sectors are current sections offset, which <b>start from previous sections when uncompressed</b>
+                        (or simply assume as length of previous data section). Fifth sector is used for configuration
+                        flag as well as custom sector for the sixth (final) sector. Hence, this table displays expected
+                        result of hex dumping the archive file (without deployment in custom sector): </p>
                     <table border="1" class="hex-table iof">
                         <tr>
                             <th class="addr-grid">Address</th>
@@ -122,6 +122,8 @@
                             <td>00</td>
                         </tr>
                     </table>
+                    <p>Value in addresses which marked as "reserved" must be set as <b><code>00</code></b>. Otherwise,
+                        it consider as <b>invalid</b> archive file that reading process must be aborted. </p>
                     <div id="iof-flagconf">
                         <h5>Flags configuration</h5>
                         <p>As mentioned before, the fifth sector is used for flag configuration, which offers metadata
@@ -144,7 +146,7 @@
                                 <th rowspan="2">2x</th>
                                 <th>Upper</th>
                                 <td rowspan="2">OS identifier</td>
-                                <td>EOL sequence</td>
+                                <td>CSV EOL sequence</td>
                                 <td>Compress method</td>
                                 <td rowspan="2" colspan="5">(Reserved)</td>
                             </tr>
@@ -166,7 +168,8 @@
                                 <li><code>0x02</code>: Legacy Windows system (9x, CE, Mobile)</li>
                                 <li><code>0x04</code>: macOS</li>
                                 <li><code>0x08</code>: iOS, iPadOS, visionOS, wearOS, tvOS</li>
-                                <li><code>0x10</code>: Linux based operating system (without modification in kernel)</li>
+                                <li><code>0x10</code>: Linux based operating system (without modification in kernel)
+                                </li>
                                 <li><code>0x20</code>: Android</li>
                                 <li><code>0x40</code>: Modified Linux kernel (except Android)</li>
                                 <li><code>0x80</code>: Other system runs in UNIX kernel (except Darwin based, which is
@@ -174,9 +177,59 @@
                             </ul>
                             </p>
                         </div>
-                        <p>Value in addresses which marked as "reserved" must be set as <b><code>00</code></b>.
-                            Otherwise, it consider as <b>invalid</b> archive file that reading process must be aborted.
-                        </p>
+                        <div>
+                            <h6>CSV EOL sequence</h6>
+                            <p>It only uses the last two bits in upper 4-bit at address <code>0x21</code> to indicate
+                                end of line sequence in CSV format. Hence, it denotes bit 1 and 0 to indicate the
+                                sequence contains <code>CR</code> and <code>LF</code> character respectively.</p>
+                            <p>In another words, here is the bit patterns regarding the EOL sequence:
+                            <ul>
+                                <li><code>0001</code>: <code>LF</code> only</li>
+                                <li><code>0010</code>: <code>CR</code> only</li>
+                                <li><code>0011</code>: <code>CR</code><code>LF</code></li>
+                            </ul> which <code>CR</code> and <code>CR</code><code>LF</code> are the most common EOL
+                            sequence adopted in modern operating system. </p>
+                        </div>
+                        <div>
+                            <h6>CSV delimiter</h6>
+                            <p>This bit pattern located in lower 4-bit at address <code>0x21</code>, which determines a
+                                character uses for sperating field in the same line of string. It offers five characters
+                                options and encoded into 4-bit value as below:
+                            <ul>
+                                <li><code>0x0</code>: Comma (<code>&comma;</code>)</li>
+                                <li><code>0x1</code>: Tab</li>
+                                <li><code>0x2</code>: Colon (<code>&colon;</code>)</li>
+                                <li><code>0x3</code>: Vertical bar (<code>&verbar;</code>)</li>
+                                <li><code>0x4</code>: Space (<code>&nbsp;</code>)</li>
+                            </ul>
+                            </p>
+                        </div>
+                        <div>
+                            <h6>Compress method</h6>
+                            <p>It is mandated to compress recorded data section when constructing archive file. However,
+                                it also offers various compression algorithm and apply the most optimal solution
+                                depending compress ratio, performance and application. Currently, it supports LZMA,
+                                Brotli, Zstandard and Zlib compression.</p>
+                            <p>These algorithms are determined by upper 4-bit in archive file address <code>0x22</code>.
+                                However, bit 3 is indicated as variable compress level support flag and remain bits are
+                                formed as pattern to determine compression algorithm in the file. Here is the
+                                corresponded value of the applied compression methods:
+                            <ul>
+                                <li><code>0x0</code>: Zlib</li>
+                                <li><code>0x1</code>: Zstandard</li>
+                                <li><code>0x2</code>: Brotli</li>
+                                <li><code>0x3</code>: LZMA</li>
+                            </ul> To indicate this algorithm support variable compress level, union the above valve with
+                            <code>0x8</code>. </p>
+                        </div>
+                        <div>
+                            <h6>Compress level</h6>
+                            <p>Some compression algorithms provide level to adjust quality of the result as well as
+                                velocity of processing. It located in lower 4-bit at address <code>0x22</code> with the
+                                range of value from <code>0x0</code> (fastest but the worst quality) to <code>0xF</code>
+                                (slowest but best quality). This value is ignored if compression level is unsupported by
+                                SDK.</p>
+                        </div>
                     </div>
                 </section>
                 <hr />
