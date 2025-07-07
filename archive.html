@@ -46,9 +46,9 @@
             </noscript>
             <article>
                 <section>
-                    <p> Logginwolf allows user to export previous gameplay record for statistic analysis. The archive
-                        uses <code>.wlog</code> (or <code>.wlo</code> if there is strict limit of file extension length)
-                        as file extension that it constructed with three ordered partitions:
+                    <p> Logginwolf allows user to export or stream previous gameplay record for statistic analysis. The
+                        archive file uses <code>.wlog</code> (or <code>.wlo</code> if there is strict limit of file
+                        extension length) as file extension that it constructed with three ordered partitions:
                     <ul>
                         <li><a href="#iof">Identifier, offsets and flags</a></li>
                         <li><a href="#checksum">Checksums</a></li>
@@ -68,10 +68,11 @@
                     <p>The first partition are divided in total six sectors, each sections occupie eight bytes without
                         delimiter. The first sector is an identifier bytecode, which should be Gray code of ASCII
                         encoded "LogWolfs" (<code>4C 6F 67 57 6F 6C 66 73</code> in hex code). From second to fourth
-                        sectors are current sections offset, which <b>start from previous sections when uncompressed</b>
-                        (or simply assume as length of previous data section). Fifth sector is used for configuration
-                        flag as well as custom sector for the sixth (final) sector. Hence, this table displays expected
-                        result of hex dumping the archive file (without deployment in custom sector): </p>
+                        sectors are current sections offset, which <b>start from previous sections (or simply assume as
+                            length of previous data section) when uncompressed</b>. Fifth sector is used for
+                        configuration flag as well as custom sector for the sixth (final) sector. Hence, this table
+                        displays expected result of hex dumping the archive file (without deployment in custom sector):
+                    </p>
                     <table border="1" class="hex-table iof">
                         <tr>
                             <th class="addr-grid">Address</th>
@@ -187,8 +188,9 @@
                                 <li><code>0001</code>: <code>LF</code> only</li>
                                 <li><code>0010</code>: <code>CR</code> only</li>
                                 <li><code>0011</code>: <code>CR</code><code>LF</code></li>
-                            </ul> which <code>CR</code> and <code>CR</code><code>LF</code> are the most common EOL
-                            sequence adopted in modern operating system. </p>
+                            </ul> which <code>LF</code> and <code>CR</code><code>LF</code> are the most common EOL
+                            sequence adopted in modern operating system. Especially <code>CR</code><code>LF</code> uses
+                            as EOL standard in CSV.</p>
                         </div>
                         <div>
                             <h6>CSV delimiter</h6>
@@ -219,8 +221,8 @@
                                 <li><code>0x1</code>: Zstandard</li>
                                 <li><code>0x2</code>: Brotli</li>
                                 <li><code>0x3</code>: LZMA</li>
-                            </ul> To indicate this algorithm support variable compress level, union the above valve with
-                            <code>0x8</code>. </p>
+                            </ul> To indicate this algorithm support variable compress level from SDK, union the above
+                            valve with <code>0x8</code>. </p>
                         </div>
                         <div>
                             <h6>Compress level</h6>
@@ -320,11 +322,17 @@
                     <header>
                         <h3>Recorded data</h3>
                     </header>
-                    <p>
-                    </p>
+                    <p> The final partition is an information of Logginwolf, which compressed according to the flag
+                        setting. This partition will be subdivided into three sections of the data, namely preferences,
+                        entity and status and game round record.</p>
                     <div id="recdata-pref">
                         <h5>Preferences</h5>
-                        <p><a data-jsonschema-gh-src>source code of JSON schema</a></p>
+                        <p>It contains metadata of the archive files, which indicates archive format edition, name of
+                            archive and when it created. These data will be encoded as JSON format and written at the
+                            first serval bytes at the recorded data partition.</p>
+                        <p>Current edition of JSON schema can be found <a data-jsonschema-gh-src>here</a> along with
+                            their descriptions for each fields. And here is an example of legal preferences section data
+                            in JSON format:</p>
                         <pre><code class="language-json">{"edition": 1, "name": "foo", "createdAt": "2025-06-01T14:00:00+00:00"}</code></pre>
                     </div>
                 </section>
