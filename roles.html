@@ -113,10 +113,12 @@
                                 <td>Seer</td>
                                 <td class="highlight error">Yes</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
+                                <td rowspan="6">1</td>
                                 <td>
                                     <p>Allow revealing one of the participants' primary party at night via moderator.
                                     </p>
+                                    <p>The result <b>must be</b> exposed via gestures (e.g. Thumbs up and down indicates
+                                        as good and bad person accordingly.)</p>
                                 </td>
                             </tr>
                             <tr>
@@ -124,21 +126,22 @@
                                 <td>Cupid</td>
                                 <td>No</td>
                                 <td class="highlight warn">Third party</td>
-                                <td>1</td>
                                 <td>
                                     <p>Select two participants &lpar;include Cupid itself&rpar; to becomes as a couple
-                                        at the initial state.</p>
+                                        at the initial state. When one of the couple be elimated, another player in the
+                                        couple also be eliminated. </p>
                                     <p>Cupid's actual party is affected by combinations of couple's parties as below:
                                     <ul>
                                         <li><b>Townfolk - Townfolk &lpar;or Cupid&rpar;</b>: Townfolk</li>
                                         <li><b>Werewolf - Werewolf</b>: Werewolf</li>
-                                        <li><b>Werewolf &lpar;or Piper&rpar; - Townfolk &lpar;or Cupid&rpar;</b>: Third
-                                            party</li>
+                                        <li><b>Werewolf - Townfolk &lpar;or Cupid&rpar;</b>: Third party</li>
+                                        <li><b>Piper with any roles also consider as third party role.</b></li>
                                     </ul>
                                     </p>
-                                    <p>Win conditions in third party role: <b>eliminate all participants except
-                                            himself&sol;herself and the couple</b>, no matter which parties are them.
-                                    </p>
+                                    <p>Win conditions in third party role: <b>eliminate (for Werewolf teams up with
+                                            non-Werewolf party except Piper) or charm (if Piper is in the couple) all
+                                            participants except himself&sol;herself and another member in couple</b>, no
+                                        matter which parties are them. </p>
                                 </td>
                             </tr>
                             <tr>
@@ -146,7 +149,6 @@
                                 <td>Witch</td>
                                 <td class="highlight error">Yes</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
                                 <td>
                                     <p>Allow heal, poison or do both to one of the participants at night. Each abilities
                                         can be used once per game round only.</p>
@@ -157,7 +159,6 @@
                                 <td>Hunter</td>
                                 <td class="highlight error">Yes</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
                                 <td>
                                     <p>Unless eliminated by poisoning or couple being elimated, Hunter can pick one of
                                         the participants to strike back right after his devoution has been announced.
@@ -169,7 +170,6 @@
                                 <td>Thief</td>
                                 <td>No</td>
                                 <td class="highlight warn">Third party</td>
-                                <td>1</td>
                                 <td>
                                     <p>Two additional Villager card added into card deck and randomly reserve two role
                                         cards before distributing role card to participants. Thief can reveal the
@@ -181,7 +181,6 @@
                                 <td>Little girl</td>
                                 <td>No</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
                                 <td>
                                     <p>She can <b>secretly peek</b> when Werewolfs are going to murder one of the
                                         members in Townfolk at night. However, she will be elimated if discovered by
@@ -215,7 +214,7 @@
                                 <td>Idiot</td>
                                 <td>No</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
+                                <td rowspan="5">1</td>
                                 <td>
                                     <p>Idiot can continue to play with revoked voting ability if he&sol;she was picked
                                         during judging session.</p>
@@ -226,7 +225,6 @@
                                 <td>Elder</td>
                                 <td>No</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
                                 <td>
                                     <p>When he&sol;she is murdered by Werewolves first time, all Townfolk party members'
                                         special power will be disapperared. He&sol;She becomes eliminated if either
@@ -240,7 +238,6 @@
                                 <td>Scapegoat</td>
                                 <td>No</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
                                 <td>
                                     <p>If vote result from judging session is tie, Scapegoat will be eilimated
                                         automatically instead of moderator's preference. Once eliminated in judging
@@ -253,7 +250,6 @@
                                 <td>Defender</td>
                                 <td>No</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
                                 <td>
                                     <p>Each night Defender can protect any participants &lpar;include himself&rpar;, who
                                         not be protected last night to prevent being murdered by Werewolf.</p>
@@ -264,7 +260,6 @@
                                 <td>Piper</td>
                                 <td>No</td>
                                 <td class="highlight warn">Third party</td>
-                                <td>1</td>
                                 <td>
                                     <p>Each nights, Piper can charms two participants until every participants are being
                                         charmed except him&sol;her.</p>
@@ -277,10 +272,10 @@
                     </div>
                     <div id="chinese">
                         <h5>Chinese</h5>
-                        <p>The Chinese variant allows participants who playing Werewolf party to self-reveal his&sol;her
-                            role during discussion. However, unless specified in role description, player who
-                            self-revealed will be eliminated automatically as well as entering night routine
-                            immediately.</p>
+                        <p>The Chinese variant allows participants who playing majority Werewolf party and specified
+                            roles in Townfolk party to self-reveal his&sol;her role during discussion. However, unless
+                            mentioned in role description, player who self-revealed will be eliminated automatically as
+                            well as entering night routine immediately.</p>
                         <table border="1" class="dynamic-layout role-table">
                             <tr>
                                 <th>Role ID</th>
@@ -333,7 +328,7 @@
                                 <td>守衛&sol;守卫 (Defender)</td>
                                 <td>No</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
+                                <td rowspan="2">1</td>
                                 <td>The behaviour is the same from <a href="#origin">original game</a>, but the
                                     protection is no longer be applied if the protected player is also healed by witch.
                                 </td>
@@ -343,13 +338,13 @@
                                 <td>騎士&sol;骑士 (Knight)</td>
                                 <td>No</td>
                                 <td class="highlight success">Townfolk</td>
-                                <td>1</td>
                                 <td>
-                                    <p>Knight can duel with one of the participants during discussion session. If the
-                                        chosen player is werewolf party, he&sol;she will be eliminated and their special
-                                        skills can no longer be activated (if applied); then, the game fall at night
-                                        immediately. Otherwise, resume the discussion. Knight will be elimated
-                                        automatically once he&sol;she activate the duel.</p>
+                                    <p>Knight can reveal himself&sol;herself to make a duel with one of the participants
+                                        during discussion session. If the chosen player is werewolf party, he&sol;she
+                                        will be eliminated and their special skills can no longer be activated (if
+                                        applied); then, the game fall at night immediately. Otherwise, resume the
+                                        discussion. Knight will be elimated automatically once he&sol;she activate the
+                                        duel.</p>
                                 </td>
                             </tr>
                             <tr>
@@ -357,7 +352,8 @@
                                 <td>狼王 (Werewolf king)</td>
                                 <td>No</td>
                                 <td class="highlight error">Werewolf</td>
-                                <td>1</td>
+                                <td rowspan="2">1, as well as comply <a href="./#rules">the ratio</a> between Townfolk
+                                    and Werewolf parties</td>
                                 <td>
                                     <p>His behaviour is identical with hunter, which take down one of the participant
                                         when he is being eliminated. Hunter and Werewolf king are no longer allow to
@@ -369,11 +365,11 @@
                                 <td>狼美人 (Wolfbeauty)</td>
                                 <td>No</td>
                                 <td class="highlight error">Werewolf</td>
-                                <td>1</td>
                                 <td>
                                     <p>After she commited murder with other werewolf, she can seduce another player that
-                                        once she eliminated next day, the victum will also be eliminated with no special ability
-                                        can be activated. Otherwise, the seduction discarded and repeat the procedure at night.</p>
+                                        once she eliminated next day, the victum will also be eliminated with no special
+                                        ability can be activated. Otherwise, the seduction discarded and repeat the
+                                        procedure at night.</p>
                                     <p>Self-reveal is forbidden for this role.</p>
                                 </td>
                             </tr>
