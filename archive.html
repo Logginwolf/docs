@@ -76,51 +76,51 @@
                     <table border="1" class="hex-table iof">
                         <tr>
                             <th class="addr-grid">Address</th>
-                            <th>0</th>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>5</th>
-                            <th>6</th>
-                            <th>7</th>
-                            <th>8</th>
-                            <th>9</th>
-                            <th>A</th>
-                            <th>B</th>
-                            <th>C</th>
-                            <th>D</th>
-                            <th>E</th>
-                            <th>F</th>
+                            <th class="mono-style">0</th>
+                            <th class="mono-style">1</th>
+                            <th class="mono-style">2</th>
+                            <th class="mono-style">3</th>
+                            <th class="mono-style">4</th>
+                            <th class="mono-style">5</th>
+                            <th class="mono-style">6</th>
+                            <th class="mono-style">7</th>
+                            <th class="mono-style">8</th>
+                            <th class="mono-style">9</th>
+                            <th class="mono-style">A</th>
+                            <th class="mono-style">B</th>
+                            <th class="mono-style">C</th>
+                            <th class="mono-style">D</th>
+                            <th class="mono-style">E</th>
+                            <th class="mono-style">F</th>
                         </tr>
                         <tr>
-                            <th>0x</th>
-                            <td>6A</td>
-                            <td>58</td>
-                            <td>D4</td>
-                            <td>FC</td>
-                            <td>D8</td>
-                            <td>DA</td>
-                            <td>55</td>
-                            <td>4A</td>
+                            <th class="mono-style">0x</th>
+                            <td class="mono-style">6A</td>
+                            <td class="mono-style">58</td>
+                            <td class="mono-style">D4</td>
+                            <td class="mono-style">FC</td>
+                            <td class="mono-style">D8</td>
+                            <td class="mono-style">DA</td>
+                            <td class="mono-style">55</td>
+                            <td class="mono-style">4A</td>
                             <td colspan="8">(Offset of preferences in recorded data section)</td>
                         </tr>
                         <tr>
-                            <th>1x</th>
+                            <th class="mono-style">1x</th>
                             <td colspan="8">(Offset of entity and status in recorded data section)</td>
                             <td colspan="8">(Offset of game rounds log in recorded data section)</td>
                         </tr>
                         <tr>
-                            <th>2x</th>
+                            <th class="mono-style">2x</th>
                             <td colspan="8">(Flag configuration, see <a href="#iof-flagconf">below</a>)</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>00</td>
+                            <td class="mono-style">00</td>
+                            <td class="mono-style">00</td>
+                            <td class="mono-style">00</td>
+                            <td class="mono-style">00</td>
+                            <td class="mono-style">00</td>
+                            <td class="mono-style">00</td>
+                            <td class="mono-style">00</td>
+                            <td class="mono-style">00</td>
                         </tr>
                     </table>
                     <p>Value in addresses which marked as "reserved" must be set as <b><code>00</code></b>. Otherwise,
@@ -134,17 +134,17 @@
                         <table border="1" class="hex-table dynamic-layout flagconf">
                             <tr>
                                 <th colspan="2" class="addr-grid">Address</th>
-                                <th>0</th>
-                                <th>1</th>
-                                <th>2</th>
-                                <th>3</th>
-                                <th>4</th>
-                                <th>5</th>
-                                <th>6</th>
-                                <th>7</th>
+                                <th class="mono-style">0</th>
+                                <th class="mono-style">1</th>
+                                <th class="mono-style">2</th>
+                                <th class="mono-style">3</th>
+                                <th class="mono-style">4</th>
+                                <th class="mono-style">5</th>
+                                <th class="mono-style">6</th>
+                                <th class="mono-style">7</th>
                             </tr>
                             <tr>
-                                <th rowspan="2">2x</th>
+                                <th rowspan="2" class="mono-style">2x</th>
                                 <th>Upper</th>
                                 <td rowspan="2">OS identifier</td>
                                 <td>CSV EOL sequence</td>
@@ -157,7 +157,7 @@
                                 <td>Compress level</td>
                             </tr>
                         </table>
-                        <div>
+                        <div id="iof-os">
                             <h6>OS identifier</h6>
                             <p>This flag occupies entire address at <code>0x20</code> that it represents which operating
                                 system is used for generating archive file. The eligable values and their corresponding
@@ -178,7 +178,7 @@
                             </ul>
                             </p>
                         </div>
-                        <div>
+                        <div id="iof-eol">
                             <h6>CSV EOL sequence</h6>
                             <p>It only uses the last two bits in upper 4-bit at address <code>0x21</code> to indicate
                                 end of line sequence in CSV format. Hence, it denotes bit 1 and 0 to indicate the
@@ -192,7 +192,7 @@
                             sequence adopted in modern operating system. Especially <code>CR</code><code>LF</code> uses
                             as EOL standard in CSV.</p>
                         </div>
-                        <div>
+                        <div id="iof-delim">
                             <h6>CSV delimiter</h6>
                             <p>This bit pattern located in lower 4-bit at address <code>0x21</code>, which determines a
                                 character uses for sperating field in the same line of string. It offers five characters
@@ -206,7 +206,7 @@
                             </ul>
                             </p>
                         </div>
-                        <div>
+                        <div id="iof-compress-method">
                             <h6>Compress method</h6>
                             <p>It is mandated to compress recorded data section when constructing archive file. However,
                                 it also offers various compression algorithm and apply the most optimal solution
@@ -224,7 +224,7 @@
                             </ul> To indicate this algorithm support variable compress level from SDK, union the above
                             valve with <code>0x8</code>. </p>
                         </div>
-                        <div>
+                        <div id="iof-compress-lv">
                             <h6>Compress level</h6>
                             <p>Some compression algorithms provide level to adjust quality of the result as well as
                                 velocity of processing. It located in lower 4-bit at address <code>0x22</code> with the
@@ -256,64 +256,64 @@
                     <table border="1" class="hex-table checksum">
                         <tr>
                             <th class="addr-grid">Address</th>
-                            <th>0</th>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>5</th>
-                            <th>6</th>
-                            <th>7</th>
-                            <th>8</th>
-                            <th>9</th>
-                            <th>A</th>
-                            <th>B</th>
-                            <th>C</th>
-                            <th>D</th>
-                            <th>E</th>
-                            <th>F</th>
+                            <th class="mono-style">0</th>
+                            <th class="mono-style">1</th>
+                            <th class="mono-style">2</th>
+                            <th class="mono-style">3</th>
+                            <th class="mono-style">4</th>
+                            <th class="mono-style">5</th>
+                            <th class="mono-style">6</th>
+                            <th class="mono-style">7</th>
+                            <th class="mono-style">8</th>
+                            <th class="mono-style">9</th>
+                            <th class="mono-style">A</th>
+                            <th class="mono-style">B</th>
+                            <th class="mono-style">C</th>
+                            <th class="mono-style">D</th>
+                            <th class="mono-style">E</th>
+                            <th class="mono-style">F</th>
                         </tr>
                         <tr>
-                            <th>3x</th>
+                            <th class="mono-style">3x</th>
                             <td colspan="16" rowspan="4">(SHA3-512's hash result of preferences in recorded data
                                 sections)</td>
                         </tr>
                         <tr>
-                            <th>4x</th>
+                            <th class="mono-style">4x</th>
                         </tr>
                         <tr>
-                            <th>5x</th>
+                            <th class="mono-style">5x</th>
                         </tr>
                         <tr>
-                            <th>6x</th>
+                            <th class="mono-style">6x</th>
                         </tr>
                         <tr>
-                            <th>7x</th>
+                            <th class="mono-style">7x</th>
                             <td colspan="16" rowspan="4">(SHA3-512's hash result of entity and status in recorded data
                                 sections)</td>
                         </tr>
                         <tr>
-                            <th>8x</th>
+                            <th class="mono-style">8x</th>
                         </tr>
                         <tr>
-                            <th>9x</th>
+                            <th class="mono-style">9x</th>
                         </tr>
                         <tr>
-                            <th>Ax</th>
+                            <th class="mono-style">Ax</th>
                         </tr>
                         <tr>
-                            <th>Bx</th>
+                            <th class="mono-style">Bx</th>
                             <td colspan="16" rowspan="4">(SHA3-512's hash result of game rounds log in recorded data
                                 sections)</td>
                         </tr>
                         <tr>
-                            <th>Cx</th>
+                            <th class="mono-style">Cx</th>
                         </tr>
                         <tr>
-                            <th>Dx</th>
+                            <th class="mono-style">Dx</th>
                         </tr>
                         <tr>
-                            <th>Ex</th>
+                            <th class="mono-style">Ex</th>
                         </tr>
                     </table>
                 </section>
@@ -322,9 +322,9 @@
                     <header>
                         <h3>Recorded data</h3>
                     </header>
-                    <p> The final partition is an information of Logginwolf, which compressed according to the flag
-                        setting. This partition will be subdivided into three sections of the data, namely preferences,
-                        entity and status and game round record.</p>
+                    <p> The final partition is an information of Logginwolf, which compressed according to the <a
+                            href="#iof-compress-method">flag setting</a>. This partition will be subdivided into three
+                        sections of the data, namely preferences, entity and status and game round record.</p>
                     <div id="recdata-pref">
                         <h5>Preferences</h5>
                         <p>It contains metadata of the archive files, which indicates archive format edition, name of

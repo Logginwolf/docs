@@ -21,7 +21,9 @@ body>div.ctx {
 }
 
 code,
-pre {
+pre,
+table.hex-table th.mono-style,
+table.hex-table td.mono-style {
     font-family: 'Roboto Mono', 'Consolas', 'Courier New', Courier, monospace;
 }
 
@@ -53,7 +55,7 @@ h5 {
 h6 {
     font-size: 22px;
     margin: 0.66rem auto;
-    
+
 }
 
 nav.fragment-link ul {
