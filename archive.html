@@ -52,7 +52,8 @@
                     <ul>
                         <li><a href="#iof">Identifier, offsets and flags</a></li>
                         <li><a href="#checksum">Checksums</a></li>
-                        <li>Three <a href="#recdata">recorded data</a> sections (compressed, UTF-8 encoded):<ul>
+                        <li>Three <a href="#recdata">recorded data</a> sections (compressed, UTF-8 encoded for
+                            text-based data):<ul>
                                 <li><a href="#recdata-pref">Preferences</a></li>
                                 <li><a href="#recdata-entstat">Entities and Status</a></li>
                                 <li><a href="#recdata-grlog">Game rounds log</a></li>
@@ -325,6 +326,7 @@
                     <p> The final partition is an information of Logginwolf, which compressed according to the <a
                             href="#iof-compress-method">flag setting</a>. This partition will be subdivided into three
                         sections of the data, namely preferences, entity and status and game round record.</p>
+                    <p>In general, for those sections use text-based data format must be encoded as UTF-8.</p>
                     <div id="recdata-pref">
                         <h5>Preferences</h5>
                         <p>It contains metadata of the archive files, which indicates archive format edition, name of
@@ -334,6 +336,79 @@
                             their descriptions for each fields. And here is an example of legal preferences section data
                             in JSON format:</p>
                         <pre><code class="language-json">{"edition": 1, "name": "foo", "createdAt": "2025-06-01T14:00:00+00:00"}</code></pre>
+                    </div>
+                    <div id="recdata-entstat">
+                        <h5>Entities and Status</h5>
+                        <p>This section stores gamemode setting and participants related information when the game
+                            ended. The gamemode setting will be located the first byte in this section and chained with
+                            participants information, which stored under SQLite.</p>
+                        <p>The gamemode setting is mapped two 4-bit pattern, which upper 4-bit uses as game variants and
+                            lower 4-bit uses for supported expansion (in bit flag notations). The upper 4-bit value will
+                            be mapped as below:
+                        <ul>
+                            <li><code>0x0</code>: Original</li>
+                            <li><code>0x1</code>: Chinese</li>
+                        </ul> Nowadays, only the origin uses the lower 4-bit to represents applied expansion packs with
+                        this table of bit pattern: <table border="1"
+                            class="hex-table origin-expansion-supported dynamic-layout">
+                            <tr>
+                                <th class="addr-grid">Bit</th>
+                                <th class="mono-style">3</th>
+                                <th class="mono-style">2</th>
+                                <th class="mono-style">1</th>
+                                <th class="mono-style">0</th>
+                            </tr>
+                            <tr>
+                                <th>Expansion pack featured when the value is <code>1</code></th>
+                                <td colspan="3">(Unused)</td>
+                                <td><i>New Moon</i></td>
+                            </tr>
+                        </table>
+                        </p>
+                        <div class="banner warn">
+                            <p class="techdoc-remark">The database relationship is work in progress.</p>
+                        </div>
+                    </div>
+                    <div id="recdata-grlog">
+                        <h5>Game rounds log</h5>
+                        <p>It stores all actions commited during the game from initial state until the game is
+                            completed. Each actions will be recorded as a column of CSV data with this sequence of attribute row:</p>
+                            <pre><code class="language-plaintext">day,state,commiter_id,action,target_id</code></pre>
+                        <h6>Description of attributes</h6>
+                        <table border="1" class="grlog-attr">
+                            <tr>
+                                <th>Attribute name</th>
+                                <th>Type</th>
+                                <th>Descriptions</th>
+                            </tr>
+                            <tr>
+                                <td><code>day</code></td>
+                                <td>Integer</td>
+                                <td>No. of day in this game round, the value should be non-negative.</td>
+                            </tr>
+                            <tr>
+                                <td><code>state</code></td>
+                                <td>Enumerated string (init, day, night)</td>
+                                <td>State of current day progress ("init" can only be applied when <code>day</code> is <code>0</code> only).</td>
+                            </tr>
+                             <tr>
+                                <td><code>commiter_id</code></td>
+                                <td>JSON array string</td>
+                                <td>A list of id number of participants that is commiting an action.</td>
+                            </tr>
+                            <tr>
+                                <td><code>action</code></td>
+                                <td>Enumerated string</td>
+                                <td>Name of action is going to perform into the target.</td>
+                            </tr>
+                            <tr>
+                                <td><code>target_id</code></td>
+                                <td>JSON array string</td>
+                                <td>A list of id number of participants that commiter is going to apply their action into them.</td>
+                            </tr>
+                            
+                           
+                        </table>
                     </div>
                 </section>
             </article>
